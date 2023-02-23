@@ -27,7 +27,7 @@ public class DummyControllerTest {
     // id를 전달하지 않으면 insert
     // id를 전달한 경우 해당 id에 대한 데이터가 있다면 update
     // id를 전달한 경우 해당 id에 대한 데이터가 없다면 insert
-    @Transactional
+    @Transactional // 함수 종료 시 자동 commit 수행
     @PutMapping("/dummy/user/{id}")
     public User updateUser(@PathVariable int id,
                            @RequestBody User requestUser){
