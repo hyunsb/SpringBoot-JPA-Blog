@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 @Data
@@ -30,9 +31,12 @@ public class Board {
     @ColumnDefault("0")
     private int count; // 조회수 카운트
 
-    @ManyToOne // board (N) : user (1)
-    @JoinColumn(name="userId")
+    @ManyToOne(fetch = FetchType.EAGER) // board (N) : user (1)
+    @JoinColumn(name = "userId")
     private User user; // DB는 오브젝트를 저장할 수 없다. FK를 사용한다. ORM이 자동으로 FK 생성
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // mappedBy: 연관관계의 주인이 아니다. (FK가 아니다) DB에 칼럼 생성 X
+    private List<Reply> reply;
 
     @CreationTimestamp
     private Timestamp createDate;
