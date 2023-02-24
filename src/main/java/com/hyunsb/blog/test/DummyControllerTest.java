@@ -4,6 +4,7 @@ import com.hyunsb.blog.model.RoleType;
 import com.hyunsb.blog.model.User;
 import com.hyunsb.blog.respository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,6 +22,22 @@ public class DummyControllerTest {
     @Autowired // 의존성 주입 DI
     private UserRepository userRepository;
 
+    //======================= delete test =============================//
+    @DeleteMapping("/dummy/user/{id}")
+    public String deleteUser(@PathVariable int id){
+//        userRepository.findById(id).orElseThrow(()->{
+//            throw new IllegalArgumentException("삭제에 실패 했습니다.");
+//        });
+
+        try{
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException exception) {
+            return "삭제에 실패 했습니다.";
+        }
+
+        return "삭제 테스트 완료";
+    }
+
     //======================= update test =============================//
 
     // DataJpa의 save함수는
@@ -31,6 +48,7 @@ public class DummyControllerTest {
     @PutMapping("/dummy/user/{id}")
     public User updateUser(@PathVariable int id,
                            @RequestBody User requestUser){
+        // @RequestBody
         // json 데이터를 java Object 로 자동 변환 (MessageConverter 의 Jackson 라이브러리)
 
         User updateUserInfo = userRepository.findById(id).orElseThrow(() -> {
@@ -40,10 +58,11 @@ public class DummyControllerTest {
         updateUserInfo.setPassword(requestUser.getPassword());
         updateUserInfo.setEmail(requestUser.getEmail());
 
-        //userRepository.save(updateUserInfo);
-        //@Transcational 어노테이션 사용
+//        userRepository.save(updateUserInfo);
+        //@Transactional 어노테이션 사용
         //더티 체킹
-        return null;
+        //영속화된 데이터와 DB의 데이터를 비교하여 다르다면 commit 시 DB 데이터 변경
+        return updateUserInfo;
     }
 
     //======================= select test =============================//
