@@ -15,7 +15,8 @@ let index = {
         // console.log(data);
 
         // ajax 호출 시 default 가 비동기 호출
-        // ajax 통시을 이용하여 3개의 데이터를 json 으로 변경하여 insert 요청
+        // ajax 통신을 이용하여 3개의 데이터를 json 으로 변경하여 insert 요청
+        // ajax 통신을 성공하고 서버가 json 형태의 데이터를 리턴하면 자동으로 자바 Object 로 변환
         $.ajax({
             // 회원가입 수행을 요청
             type: "POST",
@@ -27,6 +28,7 @@ let index = {
         }).done(function (response){
             // 요청 결과가 정상인 경우
             alert("회원가입이 완료 되었습니다.");
+
             console.log(response);
             // location.href = "/blog";
 
