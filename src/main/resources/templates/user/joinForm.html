@@ -12,15 +12,10 @@
 
 <div class="container" style="margin-bottom: 1rem">
 
-    <form action="/action_page.php">
+    <form>
         <div class="mb-3 mt-3">
             <label for="username" class="form-label">UserName:</label>
             <input type="text" class="form-control" id="username" placeholder="Enter uesrname" name="username">
-        </div>
-
-        <div class="mb-3 mt-3">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
         </div>
 
         <div class="mb-3">
@@ -28,12 +23,17 @@
             <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
         </div>
 
-
-        <button type="submit" class="btn btn-primary">회원가입</button>
+        <div class="mb-3 mt-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+        </div>
     </form>
+
+    <button id="btn-save" class="btn btn-primary">회원가입</button>
 
 </div>
 
+<script src="/blog/js/user.js"></script>
 
 <!-- --------------------- footer --------------------- -->
 <div th:replace="/fragments/footer :: footerFragment"></div>
