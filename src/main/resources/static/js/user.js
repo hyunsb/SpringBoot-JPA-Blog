@@ -3,14 +3,46 @@ let index = {
         $("#btn-save").on("click", ()=>{ // function(){} 대신 ()=>{}을 사용, this 를 바인딩하기 위해
             this.save(); // function 을 사용하면 해당 this 가 window 를 가리킴
         });
+
+        $("#btn-login").on("click", ()=>{
+            this.login();
+        })
     },
 
-    save: function (){
-        // alert("user의 save함수 호출됨");
+    login: function (){
         let data = {
             username:$("#username").val(),
             password:$("#password").val(),
-            email:$("#email").val()
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/blog/api/user/login",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+
+        }).done(function (response){
+            console.log(response);
+            const status = response.status;
+
+            if (response.status === 200){
+                alert("로그인이 완료 되었습니다.");
+                location.href = ("/blog");
+            }
+
+            throw new Error();
+        }).fail(function (error){
+            alert(JSON.stringify(error));
+        });
+    },
+
+    save: function () {
+        // alert("user의 save함수 호출됨");
+        let data = {
+            username: $("#username").val(),
+            password: $("#password").val(),
+            email: $("#email").val()
         }
         // console.log(data);
 
@@ -25,14 +57,18 @@ let index = {
             contentType: "application/json; charset=utf-8", // body 데이터 타입 (MIME)
             dataType: "json", // 응답된 데이터가 json 형태라면 -> javascript object 로 변경
 
-        }).done(function (response){
+        }).done(function (response) {
             // 요청 결과가 정상인 경우
-            alert("회원가입이 완료 되었습니다.");
+            const status = response.status;
 
-            console.log(response);
-            // location.href = "/blog";
+            if (status === 200){
+                alert("회원가입이 완료 되었습니다.");
+                location.href = ("/blog");
+            }
 
-        }).fail(function (error){
+            throw new Error();
+
+        }).fail(function (error) {
             // 요청 결과가 비정상인 경우
             alert(JSON.stringify(error));
 

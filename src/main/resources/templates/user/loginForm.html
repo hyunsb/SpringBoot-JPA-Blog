@@ -14,7 +14,7 @@
 
     <div class="container" style="margin-bottom: 1rem">
 
-        <form action="/action_page.php">
+        <form>
             <div class="mb-3 mt-3">
                 <label for="username" class="form-label">UserName:</label>
                 <input type="text" class="form-control" id="username" placeholder="Enter uesrname" name="username">
@@ -31,14 +31,14 @@
                 </label>
             </div>
 
-            <button type="submit" class="btn btn-primary">로그인</button>
         </form>
+        <button id="btn-login" class="btn btn-primary">로그인</button>
 
     </div>
 
 </div>
 
-
+<script src="/blog/js/user.js"></script>
 <!-- --------------------- footer --------------------- -->
 <div th:replace="/fragments/footer :: footerFragment"></div>
 </body>
