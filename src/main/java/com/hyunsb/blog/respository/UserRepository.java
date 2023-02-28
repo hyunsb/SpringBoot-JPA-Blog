@@ -12,10 +12,15 @@ import java.util.Optional;
 // <Object, Data Type of PK>
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    //JPA Naming 쿼리
-    //SELECT * FROM user WHERE username = ?1 AND password = ?2
-    Optional<User> findByUsernameAndPassword(String username, String password);
+
+
+}
+
+
+//  ============================ Spring Security 사용 이전 로그인을 위한 쿼리 ===============================//
+//JPA Naming 쿼리
+//SELECT * FROM user WHERE username = ?1 AND password = ?2
+//    Optional<User> findByUsernameAndPassword(String username, String password);
 
 //    @Query(value = "value = SELECT * FROM user WHERE username = ?1 AND password = ?2", nativeQuery = true)
 //    User login(String username, String password);
-}

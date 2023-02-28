@@ -1,7 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!--<div>-->
+<!--    &lt;!&ndash;ROLE_USER 권한을 갖는다면 이 글이 보임&ndash;&gt;-->
+<!--    <h1 sec:authorize="hasRole('ADMIN')">Has admin Role</h1>-->
+
+<!--    &lt;!&ndash;ROLE_ADMIN 권한을 갖는다면 이 글이 보임&ndash;&gt;-->
+<!--    <h1 sec:authorize="hasRole('USER')">Has user Role</h1>-->
+
+<!--    <div sec:authorize="isAuthenticated()">-->
+<!--        Only Authenticated user can see this Text-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash;인증시 사용된 객체에 대한 정보&ndash;&gt;-->
+<!--    <b>Authenticated DTO:</b>-->
+<!--    <div sec:authentication="principal"></div>-->
+
+<!--    &lt;!&ndash;인증시 사용된 객체의 Username (ID)&ndash;&gt;-->
+<!--    <b>Authenticated username:</b>-->
+<!--    <div sec:authentication="name"></div>-->
+
+<!--    &lt;!&ndash;객체의 권한&ndash;&gt;-->
+<!--    <b>Authenticated user role:</b>-->
+<!--    <div sec:authentication="principal.authorities"></div>-->
+<!--</div>-->
 
 <th:block th:fragment="headerFragment">
+
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -11,6 +37,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/">Hyunsb</a>
+
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
 <!--                <ul class="nav navbar-nav">-->
@@ -29,8 +56,8 @@
 
                 <div th:if="${session.principal == null}">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/joinForm"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
-                        <li><a href="/loginForm"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
+                        <li><a href="/auth/joinForm"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
+                        <li><a href="/auth/loginForm"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
                     </ul>
                 </div>
 
@@ -45,6 +72,5 @@
         </div>
     </nav>
 </th:block>
-
 
 </html>

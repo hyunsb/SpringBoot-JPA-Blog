@@ -6,6 +6,7 @@ import com.hyunsb.blog.model.User;
 import com.hyunsb.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,12 +20,9 @@ public class UserApiController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private HttpSession session;
-
-    @PostMapping("/api/user")
+    @PostMapping("/auth/joinProc")
     public ResponseDTO<Integer> save(@RequestBody User user){ //username, password, email
-        System.out.println("UserApiController: save 메서드 호출");
+//        System.out.println("UserApiController: save 메서드 호출");
 
         // DB에 insert
         user.setRole(RoleType.USER);
@@ -33,16 +31,20 @@ public class UserApiController {
         return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    @PostMapping("/api/user/login")
-    private ResponseDTO<Integer> login(@RequestBody User user){
-        System.out.println("UserApiController: login 메서드 호출");
 
-        User principal = userService.login(user);
-        session.setAttribute("principal", principal);
+//   ============================ Spring Security 사용 이전의 로그인 컨트롤러 ===============================//
 
-        return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
-    }
+//    @PostMapping("/api/user/login")
+//    private ResponseDTO<Integer> login(@RequestBody User user, HttpSession session){
+//        System.out.println("UserApiController: login 메서드 호출");
+//
+//        User principal = userService.login(user);
+//        session.setAttribute("principal", principal);
+//
+//        return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
+//    }
 
     // Spring Security 를 활용한 로그인
+
 
 }

@@ -4,39 +4,39 @@ let index = {
             this.save(); // function 을 사용하면 해당 this 가 window 를 가리킴
         });
 
-        $("#btn-login").on("click", ()=>{
-            this.login();
-        })
+        // $("#btn-login").on("click", ()=>{
+        //     this.login();
+        // })
     },
 
-    login: function (){
-        let data = {
-            username:$("#username").val(),
-            password:$("#password").val(),
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "/api/user/login",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-
-        }).done(function (response){
-            console.log(response);
-            const status = response.status;
-
-            if (response.status === 200){
-                alert("로그인이 완료 되었습니다.");
-                location.href = ("/");
-            } else {
-                alert("올바른 정보를 입력해주세요.")
-                throw new Error();
-            }
-        }).fail(function (error){
-            alert(JSON.stringify(error));
-        });
-    },
+    // login: function (){
+    //     let data = {
+    //         username:$("#username").val(),
+    //         password:$("#password").val(),
+    //     }
+    //
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "/api/user/login",
+    //         data: JSON.stringify(data),
+    //         contentType: "application/json; charset=utf-8",
+    //         dataType: "json",
+    //
+    //     }).done(function (response){
+    //         console.log(response);
+    //         const status = response.status;
+    //
+    //         if (response.status === 200){
+    //             alert("로그인이 완료 되었습니다.");
+    //             location.href = ("/");
+    //         } else {
+    //             alert("올바른 정보를 입력해주세요.")
+    //             throw new Error();
+    //         }
+    //     }).fail(function (error){
+    //         alert(JSON.stringify(error));
+    //     });
+    // },
 
     save: function () {
         // alert("user의 save함수 호출됨");
@@ -53,7 +53,7 @@ let index = {
         $.ajax({
             // 회원가입 수행을 요청
             type: "POST",
-            url: "/api/user",
+            url: "/auth/joinProc",
             data: JSON.stringify(data), // http body 데이터
             contentType: "application/json; charset=utf-8", // body 데이터 타입 (MIME)
             dataType: "json", // 응답된 데이터가 json 형태라면 -> javascript object 로 변경
