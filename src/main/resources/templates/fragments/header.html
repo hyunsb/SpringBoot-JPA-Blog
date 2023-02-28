@@ -41,6 +41,7 @@
 
             <div class="collapse navbar-collapse" id="myNavbar">
 
+                <!-- implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'에선 안먹힘 왜지-->
                 <div sec:authorize-expr="isAuthenticated()">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="/board/form"><span class="glyphicon glyphicon-edit"></span> 글쓰기</a></li>
