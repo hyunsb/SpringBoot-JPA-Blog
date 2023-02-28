@@ -19,6 +19,9 @@ public class UserApiController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private HttpSession session;
+
     @PostMapping("/api/user")
     public ResponseDTO<Integer> save(@RequestBody User user){ //username, password, email
         System.out.println("UserApiController: save 메서드 호출");
@@ -31,13 +34,15 @@ public class UserApiController {
     }
 
     @PostMapping("/api/user/login")
-    private ResponseDTO<Integer> login(@RequestBody User user, HttpSession session){
+    private ResponseDTO<Integer> login(@RequestBody User user){
         System.out.println("UserApiController: login 메서드 호출");
 
         User principal = userService.login(user);
         session.setAttribute("principal", principal);
 
         return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
-
     }
+
+    // Spring Security 를 활용한 로그인
+
 }
