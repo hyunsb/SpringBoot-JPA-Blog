@@ -22,9 +22,7 @@ public class UserService {
 
     @Transactional
     public void join(User user) {
-        String rawPassword = user.getPassword();
-        String encPassword = encoder.encode(rawPassword);
-
+        String encPassword = encoder.encode(user.getPassword());
         user.setPassword(encPassword);
         user.setRole(RoleType.USER);
 

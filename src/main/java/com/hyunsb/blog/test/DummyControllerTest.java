@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 @RestController // html 파일이 아닌 data 를 리턴해주는 controller
