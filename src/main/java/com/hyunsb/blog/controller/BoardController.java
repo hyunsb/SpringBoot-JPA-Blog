@@ -15,11 +15,13 @@ public class BoardController {
     private BoardService boardService;
 
     @GetMapping({"","/"})
-    public String index(Model model){
+    public String index(Model model,
+                        @AuthenticationPrincipal PrincipalDetail principalDetail){
 //        @AuthenticationPrincipal PrincipalDetail principal  : parameter
 //        System.out.println("로그인 사용자 아이디: " + principal.getUsername());
+        if(principalDetail != null)
+            model.addAttribute("boards", boardService.findAllUserBoard(principalDetail.getUser()));
 
-        model.addAttribute("boards", boardService.findAll());
         return "index"; // viewResolver 작동
     }
 

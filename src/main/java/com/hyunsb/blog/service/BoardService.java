@@ -22,6 +22,10 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    public List<Board> findAllUserBoard(User user){
+        return boardRepository.findByUser(user);
+    }
+
     public List<Board> findAll() {
         return boardRepository.findAll();
     }
