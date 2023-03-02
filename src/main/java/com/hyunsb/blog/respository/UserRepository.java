@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-// JSP: DAO
+// Spring의 Repository는 JSP 의 DAO
 // 자동으로 Bean 등록이 된다. @Repository 생략 가능
 // <Object, Data Type of PK>
 public interface UserRepository extends JpaRepository<User, Integer> {

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- --------------------- config --------------------- -->
+  <th:block th:replace="/fragments/config :: configFragment"></th:block>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css"
+        integrity="sha256-IKhQVXDfwbVELwiR0ke6dX+pJt0RSmWky3WB2pNx9Hg=" crossorigin="anonymous">
+
+</head>
+<body>
+<!-- --------------------- header --------------------- -->
+<div th:replace="/fragments/header :: headerFragment"></div>
+
+
+<div class="container">
+
+  <form action="/auth/loginProc" method="post">
+    <div class="mb-3 mt-3" style="margin-bottom: 1rem">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="title" placeholder="Enter Title" name="title">
+    </div>
+
+    <div class="mb-3" style="margin-bottom: 1rem">
+      <label for="Content" class="form-label">Content</label>
+      <textarea class="form-control summernote" rows="5" id="Content" name="Content"></textarea>
+    </div>
+  </form>
+
+  <button id="btn-save" class="btn btn-primary">글쓰기 완료</button>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"
+        integrity="sha256-5slxYrL5Ct3mhMAp/dgnb5JSnTYMtkr4dHby34N10qw=" crossorigin="anonymous"></script>
+
+<!-- language pack -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/lang/summernote-ko-KR.min.js"
+        integrity="sha256-y2bkXLA0VKwUx5hwbBKnaboRThcu7YOFyuYarJbCnoQ=" crossorigin="anonymous"></script>
+
+<script>
+  $('.summernote').summernote({
+    placeholder: 'Enter Content',
+    tabsize: 2,
+    height: 400,
+    lang: 'ko-KR', // default: 'en-US'
+  });
+</script>
+
+<script src="/js/board.js"></script>
+
+<!-- --------------------- footer --------------------- -->
+<div th:replace="/fragments/footer :: footerFragment"></div>
+</body>
+</html>
