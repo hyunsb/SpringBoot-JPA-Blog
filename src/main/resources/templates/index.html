@@ -13,9 +13,11 @@
 
 <div class="container">
 
+    <h1>전체 글 보기</h1>
+
     <!--  CARD  -->
     <div th:each="board : ${boards}">
-        <div class="card" style="border: 1px solid lightgray; border-radius: .5rem; padding: 1rem; margin-bottom: 1rem">
+        <div class="card" style="padding: 1rem; margin-bottom: 1rem">
             <div class="card-body">
                 <h4 class="card-title" th:text="${board.title}">제목 적는 부분</h4>
                 <a href="#" class="btn btn-primary">상세 보기</a>
@@ -23,7 +25,24 @@
         </div>
     </div>
 
+    <ul class="pagination justify-content-center" style="margin:20px 0">
+        <li th:if="${boards.isFirst()}" class="page-item disabled">
+            <a class="page-link" th:href="@{/(page=${boards.getNumber() - 1 })}">Previous</a>
+        </li>
+        <li th:unless="${boards.isFirst()}" class="page-item">
+            <a class="page-link" th:href="@{/(page=${boards.getNumber() - 1 })}">Previous</a>
+        </li>
+
+        <li th:if="${boards.isLast()}" class="page-item disabled">
+            <a class="page-link" th:href="@{/(page=${boards.getNumber() + 1 })}">Next</a>
+        </li>
+        <li th:unless="${boards.isLast()}" class="page-item">
+            <a class="page-link" th:href="@{/(page=${boards.getNumber() + 1 })}">Next</a>
+        </li>
+    </ul>
+
 </div>
+
 
 <!-- --------------------- footer --------------------- -->
 <div th:replace="/fragments/footer :: footerFragment"></div>

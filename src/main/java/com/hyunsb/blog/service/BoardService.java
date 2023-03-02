@@ -4,6 +4,8 @@ import com.hyunsb.blog.model.Board;
 import com.hyunsb.blog.model.User;
 import com.hyunsb.blog.respository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +24,11 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public List<Board> findAllUserBoard(User user){
-        return boardRepository.findByUser(user);
+    public Page<Board> findAllUserBoard(User user, Pageable pageable){
+        return boardRepository.findByUser(user, pageable);
     }
 
-    public List<Board> findAll() {
-        return boardRepository.findAll();
+    public Page<Board> findAll(Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
 }

@@ -3,6 +3,9 @@ package com.hyunsb.blog.controller;
 import com.hyunsb.blog.config.auth.PrincipalDetail;
 import com.hyunsb.blog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +18,19 @@ public class BoardController {
     private BoardService boardService;
 
     @GetMapping({"","/"})
-    public String index(Model model){
+    public String index(Model model,
+                        @PageableDefault(size = 4, sort = "id", direction = Sort.Direction.DESC)Pageable pageable){
 
-        model.addAttribute("boards", boardService.findAll());
+        model.addAttribute("boards", boardService.findAll(pageable));
         return "index"; // viewResolver 작동
     }
 
     @GetMapping("/board/myPost")
     public String myPost(Model model,
-                         @AuthenticationPrincipal PrincipalDetail principalDetail){
+                         @AuthenticationPrincipal PrincipalDetail principalDetail,
+                         @PageableDefault(size = 4, sort = "id", direction = Sort.Direction.DESC)Pageable pageable){
 
-        model.addAttribute("boards", boardService.findAllUserBoard(principalDetail.getUser()));
+        model.addAttribute("boards", boardService.findAllUserBoard(principalDetail.getUser(), pageable));
         return "board/myPost";
     }
 
