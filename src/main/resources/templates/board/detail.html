@@ -13,8 +13,10 @@
 <div class="container">
 
   <form method="post">
-    <div class="mb-3 mt-3" style="margin-bottom: 1rem; border-bottom: 2px solid lightgray">
+    <div class="mb-3 mt-3" style="margin-bottom: 1rem;">
       <h1 id="title" th:text="${board.title}">title</h1>
+      작성자: <span th:text="${board.user.username}"></span><br>
+      작성일: <span th:text="${board.createDate}"></span>
     </div>
 
     <div class="mb-3" style="margin-bottom: 1rem; border: 2px solid lightgray; border-radius: 1rem; padding: 1rem">
