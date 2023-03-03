@@ -31,4 +31,11 @@ public class BoardService {
     public Page<Board> findAll(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
+
+    public Board findBoardById(int id) {
+        return boardRepository.findById(id).
+                orElseThrow(()->{
+                    throw new IllegalArgumentException("게시글 정보가 존재하지 않습니다.");
+                });
+    }
 }

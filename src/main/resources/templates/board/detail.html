@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- --------------------- config --------------------- -->
+  <th:block th:replace="/fragments/config :: configFragment"></th:block>
+</head>
+<body>
+<!-- --------------------- header --------------------- -->
+<div th:replace="/fragments/header :: headerFragment"></div>
+
+
+<div class="container">
+
+  <form method="post">
+    <div class="mb-3 mt-3" style="margin-bottom: 1rem; border-bottom: 2px solid lightgray">
+      <h1 id="title" th:text="${board.title}">title</h1>
+    </div>
+
+    <div class="mb-3" style="margin-bottom: 1rem; border: 2px solid lightgray; border-radius: 1rem; padding: 1rem">
+      <div id="content">
+        <p th:utext="${board.content}"></p>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+
+<!-- --------------------- footer --------------------- -->
+<div th:replace="/fragments/footer :: footerFragment"></div>
+</body>
+</html>
