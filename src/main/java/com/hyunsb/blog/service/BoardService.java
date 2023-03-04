@@ -24,14 +24,17 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    @Transactional(readOnly = true)
     public Page<Board> findAllUserBoard(User user, Pageable pageable){
         return boardRepository.findByUser(user, pageable);
     }
 
+    @Transactional(readOnly = true)
     public Page<Board> findAll(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
     public Board findBoardById(int id) {
         return boardRepository.findById(id).
                 orElseThrow(()->{
@@ -39,6 +42,7 @@ public class BoardService {
                 });
     }
 
+    @Transactional
     public void boardDelete(int id) {
         boardRepository.deleteById(id);
     }

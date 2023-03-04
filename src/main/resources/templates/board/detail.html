@@ -41,11 +41,11 @@
 
     <script type="text/javascript" th:inline="javascript">
         const id = $.parseJSON('[[ ${board.id} ]]');
+        const detailTitle = $.parseJSON('[[ ${board.title} ]]');
+        const detailContent = $.parseJSON('[[ ${board.content} ]]');
 
-        console.log('[[ ${#authentication.name} ]]')
-        console.log('[[ ${board.user.username} ]]')
-
-
+        // console.log('[[ ${#authentication.name} ]]')
+        // console.log('[[ ${board.user.username} ]]')
     </script>
 
     <script src="/js/board.js"></script>

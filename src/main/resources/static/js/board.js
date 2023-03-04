@@ -16,12 +16,12 @@ let index = {
     save: function () {
         // alert("user의 save함수 호출됨");
         let data = {
-            title: $("#title").val(),
-            content: $("#content").val()
+            title: detailTitle,
+            content: detailContent
         }
 
         $.ajax({
-            type: "POST",
+            type: "PUT",
             url: "/api/board",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
