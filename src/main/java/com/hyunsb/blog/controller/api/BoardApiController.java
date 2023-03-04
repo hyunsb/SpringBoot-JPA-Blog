@@ -7,9 +7,7 @@ import com.hyunsb.blog.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class BoardApiController {
@@ -22,6 +20,12 @@ public class BoardApiController {
                                      @AuthenticationPrincipal PrincipalDetail principalDetail){
 
         boardService.save(board, principalDetail.getUser());
+        return new ResponseDTO<>(HttpStatus.OK.value(), 1);
+    }
+
+    @DeleteMapping("/api/board/{id}")
+    public ResponseDTO<Integer> delete(@PathVariable int id){
+        boardService.boardDelete(id);
         return new ResponseDTO<>(HttpStatus.OK.value(), 1);
     }
 }

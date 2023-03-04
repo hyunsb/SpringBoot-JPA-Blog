@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <!-- --------------------- config --------------------- -->
-  <th:block th:replace="/fragments/config :: configFragment"></th:block>
+    <!-- --------------------- config --------------------- -->
+    <th:block th:replace="/fragments/config :: configFragment"></th:block>
 </head>
 <body>
 <!-- --------------------- header --------------------- -->
@@ -12,30 +12,43 @@
 
 <div class="container">
 
-  <div style="margin: 1rem 0">
-    <button type="button" class="btn btn-outline-secondary" onclick="history.back()">돌아가기</button>
-    <button class="btn btn-warning">수정</button>
-    <button class="btn btn-danger">삭제</button>
-  </div>
+    <div style="margin: 1rem 0; display: flex">
+        <button type="button" class="btn btn-outline-secondary" style="margin-right: .5rem" onclick="history.back()">돌아가기</button>
 
-  <div style="border: 2px solid lightgray; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem">
-
-      <div class="mb-3 mt-3" style="margin-bottom: 1rem;">
-        <h1 id="title" th:text="${board.title}">title</h1>
-        작성자: <span th:text="${board.user.username}"></span><br>
-        작성일: <span th:text="${board.createDate}"></span>
-      </div>
-
-      <hr>
-
-      <div class="mb-3" style="margin-bottom: 1rem;">
-        <div id="content">
-          <p th:utext="${board.content}"></p>
+        <div th:if="${board.user.username.equals(#authentication.name)}">
+            <button id="btn-update" class="btn btn-warning">수정</button>
+            <button id="btn-delete" class="btn btn-danger">삭제</button>
         </div>
-      </div>
-  </div>
+
+    </div>
+    <div style="border: 2px solid lightgray; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem">
+
+        <div class="mb-3 mt-3" style="margin-bottom: 1rem;">
+            <h1 id="title" th:text="${board.title}">title</h1>
+            글번호: <span id="id" th:text="${board.id}"></span>
+            작성자: <span th:text="${board.user.username}"></span><br>
+            작성일: <span th:text="${board.createDate}"></span>
+        </div>
+
+        <hr>
+
+        <div class="mb-3" style="margin-bottom: 1rem;">
+            <div id="content">
+                <p th:utext="${board.content}"></p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" th:inline="javascript">
+        const id = $.parseJSON('[[ ${board.id} ]]');
+
+        console.log('[[ ${#authentication.name} ]]')
+        console.log('[[ ${board.user.username} ]]')
 
 
+    </script>
+
+    <script src="/js/board.js"></script>
 </div>
 
 

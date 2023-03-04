@@ -38,4 +38,8 @@ public class BoardService {
                     throw new IllegalArgumentException("게시글 정보가 존재하지 않습니다.");
                 });
     }
+
+    public void boardDelete(int id) {
+        boardRepository.deleteById(id);
+    }
 }
