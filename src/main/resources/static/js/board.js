@@ -73,12 +73,12 @@ let index = {
 
     update: function () {
         let data = {
-            title: $("#title").val(),
-            content: $("#content").val()
+            title: detailTitle,
+            content: detailContent
         }
 
         $.ajax({
-            type: "POST",
+            type: "PUT",
             url: "/api/board",
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
