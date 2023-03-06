@@ -22,8 +22,8 @@ public class UserApiController {
 
     @PostMapping("/auth/joinProc")
     public ResponseDTO<Integer> save(@RequestBody User user){ //username, password, email
-        userService.join(user);
 
+        userService.join(user);
         // 오류 시 ExceptionHandler 에서 처리
 
         return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);

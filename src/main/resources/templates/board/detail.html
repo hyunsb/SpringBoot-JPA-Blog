@@ -24,10 +24,10 @@
     <div style="border: 2px solid lightgray; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem">
 
         <div class="mb-3 mt-3" style="margin-bottom: 1rem;">
+            <!--                <p>글번호: <span id="id" th:text="${board.id}"></span></p>-->
+            <p style="margin-bottom: 0">작성자: <span th:text="${board.user.username}"></span></p>
+            <p>작성일: <span th:text="${board.createDate}"></span></p>
             <h1 id="title" th:text="${board.title}">title</h1>
-            글번호: <span id="id" th:text="${board.id}"></span>
-            작성자: <span th:text="${board.user.username}"></span><br>
-            작성일: <span th:text="${board.createDate}"></span>
         </div>
 
         <hr>

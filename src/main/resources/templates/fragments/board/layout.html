@@ -4,6 +4,7 @@
       <div class="card" style="padding: 1rem; margin-bottom: 1rem; border-radius: 1rem; border: 2px solid lightgray">
         <div class="card-body">
           <h4 class="card-title" th:text="${board.title}">제목 적는 부분</h4>
+          <p>작성자: <span th:text="${board.user.username}"></span></p>
           <a th:href="@{/board/{id}(id = ${board.id})}" class="btn btn-primary">상세 보기</a>
         </div>
       </div>
