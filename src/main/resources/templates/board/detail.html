@@ -16,7 +16,7 @@
         <button type="button" class="btn btn-outline-secondary" style="margin-right: .5rem" onclick="history.back()">돌아가기</button>
 
         <div th:if="${board.user.username.equals(#authentication.name)}">
-            <button id="btn-update" class="btn btn-warning">수정</button>
+            <button th:onclick="|location.href = '@{/board/{id}/updateForm(id=${board.id})}'|" class="btn btn-warning">수정</button>
             <button id="btn-delete" class="btn btn-danger">삭제</button>
         </div>
 
@@ -41,8 +41,6 @@
 
     <script type="text/javascript" th:inline="javascript">
         const id = $.parseJSON('[[ ${board.id} ]]');
-        const detailTitle = $.parseJSON('[[ ${board.title} ]]');
-        const detailContent = $.parseJSON('[[ ${board.content} ]]');
 
         // console.log('[[ ${#authentication.name} ]]')
         // console.log('[[ ${board.user.username} ]]')

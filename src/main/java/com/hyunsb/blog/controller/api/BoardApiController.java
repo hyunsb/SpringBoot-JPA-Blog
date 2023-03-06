@@ -28,4 +28,12 @@ public class BoardApiController {
         boardService.boardDelete(id);
         return new ResponseDTO<>(HttpStatus.OK.value(), 1);
     }
+
+    @PutMapping("/api/board/{id}")
+    public ResponseDTO<Integer> update(@PathVariable int id,
+                                       @RequestBody Board board){
+
+        boardService.updateBoard(id, board);
+        return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
+    }
 }

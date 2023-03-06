@@ -46,4 +46,16 @@ public class BoardService {
     public void boardDelete(int id) {
         boardRepository.deleteById(id);
     }
+
+    @Transactional
+    public void updateBoard(int id, Board requestBoard) {
+        // 수정 전 영속화
+        Board board = boardRepository.findById(id).orElseThrow(()->{
+            throw new IllegalArgumentException("글 찾기 실패: 게시글이 존재하지 않습니다.");
+        }); // 영속성 컨텍스트에 board 가 추가됨
+
+        board.setTitle(requestBoard.getTitle());
+        board.setContent(requestBoard.getContent());
+        // 해당 함수 종료 시(Service 가 종료될 때) 트랜잭션이 종료되면서 더티체킹 진행 -> 자동 업데이트(DB flush)
+    }
 }
