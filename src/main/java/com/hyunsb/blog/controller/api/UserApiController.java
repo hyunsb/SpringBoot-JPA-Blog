@@ -6,12 +6,15 @@ import com.hyunsb.blog.model.RoleType;
 import com.hyunsb.blog.model.User;
 import com.hyunsb.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,6 +30,9 @@ public class UserApiController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @PostMapping("/auth/joinProc")
     public ResponseDTO<Integer> save(@RequestBody User user){ //username, password, email
 
@@ -39,18 +45,13 @@ public class UserApiController {
     // @RequestBody 사용 시 json 타입을 받을 수 있음
     // 사용하지 않을 시 (key=value 형태의 데이터 : x-www-form-urlencoded)
     @PutMapping("/user")
-    public ResponseDTO<Integer> update(@RequestBody User user,
-                                       @AuthenticationPrincipal PrincipalDetail principalDetail,
-                                       HttpSession session){
+    public ResponseDTO<Integer> update(@RequestBody User user){
         userService.update(user);
         // 서비스가 종료되면서 트랜잭션도 종료되어 DB의 값은 변경되지만
         // 시큐리티 세션의 정보는 변경 되지 않은 상태이기 때문에 직접 세션의 값 변경이 필요하다.
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken(principalDetail,null);
-
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(authentication);
-        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
     }

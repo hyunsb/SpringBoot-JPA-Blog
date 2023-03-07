@@ -81,11 +81,9 @@ let index = {
     },
 
     update: function (){
-
-
-
         let data = {
             id: updateUserId,
+            username: $("#username").val(),
             password: $("#password").val(),
             email: $("#email").val()
         }
