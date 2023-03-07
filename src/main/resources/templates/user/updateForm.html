@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- --------------------- config --------------------- -->
+    <th:block th:replace="/fragments/config :: configFragment"></th:block>
+</head>
+<body>
+<!-- --------------------- header --------------------- -->
+<div th:replace="/fragments/header :: headerFragment"></div>
+
+
+<div class="container" style="margin-bottom: 1rem">
+
+    <form>
+        <div class="mb-3 mt-3">
+            <label for="username" class="form-label">UserName:</label>
+            <input type="text" class="form-control" id="username" th:value="${#authentication.principal.user.username}" name="username" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="text" class="form-control" id="password" placeholder="Enter password" name="password">
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" th:value="${#authentication.principal.user.email}" placeholder="Enter email" name="email">
+        </div>
+    </form>
+
+    <button id="btn-update" class="btn btn-primary">회원가입</button>
+
+</div>
+<script src="/js/user.js"></script>
+
+
+<!-- --------------------- footer --------------------- -->
+<div th:replace="/fragments/footer :: footerFragment"></div>
+</body>
+</html>
