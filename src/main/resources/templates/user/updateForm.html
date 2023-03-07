@@ -15,7 +15,7 @@
     <form>
         <div class="mb-3 mt-3">
             <label for="username" class="form-label">UserName:</label>
-            <input type="text" class="form-control" id="username" th:value="${#authentication.principal.user.username}" name="username" readonly>
+            <input type="text" class="form-control" id="username" th:value="${userInfo.username}" name="username" readonly>
         </div>
 
         <div class="mb-3">
@@ -25,7 +25,7 @@
 
         <div class="mb-3 mt-3">
             <label for="email" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="email" th:value="${#authentication.principal.user.email}" placeholder="Enter email" name="email">
+            <input type="email" class="form-control" id="email" th:value="${userInfo.email}" placeholder="Enter email" name="email">
         </div>
     </form>
 

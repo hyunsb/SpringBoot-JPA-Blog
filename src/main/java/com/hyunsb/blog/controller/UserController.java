@@ -1,6 +1,12 @@
 package com.hyunsb.blog.controller;
 
+import com.hyunsb.blog.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 // 인증이 되지 않은 사용자들이 출입할 수 있는 경로 /auth/**
@@ -9,6 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class UserController {
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/auth/joinForm")
     public String joinForm(){
@@ -21,7 +30,9 @@ public class UserController {
     }
 
     @GetMapping("/user/updateForm")
-    public String updateForm(){
+    public String updateForm(Authentication authentication, Model model){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        model.addAttribute("userInfo", userService.findByName(userDetails.getUsername()));
         return "user/updateForm";
     }
 }
