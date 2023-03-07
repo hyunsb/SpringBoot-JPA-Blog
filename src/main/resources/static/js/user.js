@@ -4,6 +4,10 @@ let index = {
             this.save(); // function 을 사용하면 해당 this 가 window 를 가리킴
         });
 
+        $("#btn-update").on("click", ()=>{
+            this.update();
+        })
+
         // $("#btn-login").on("click", ()=>{
         //     this.login();
         // })
@@ -64,6 +68,41 @@ let index = {
 
             if (status === 200){
                 alert("회원가입이 완료 되었습니다.");
+                location.href = ("/");
+            } else {
+                throw new Error();
+            }
+
+        }).fail(function (error) {
+            // 요청 결과가 비정상인 경우
+            alert(JSON.stringify(error));
+
+        }); // ajax 통신을 이용해서 3개의 데이터를 json 으로 변경하여 insert 요청
+    },
+
+    update: function (){
+
+
+
+        let data = {
+            id: updateUserId,
+            password: $("#password").val(),
+            email: $("#email").val()
+        }
+
+        $.ajax({
+            type: "PUT",
+            url: "/user",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+
+        }).done(function (response) {
+            // 요청 결과가 정상인 경우
+            const status = response.status;
+
+            if (status === 200){
+                alert("회원정보 수정이 완료 되었습니다.");
                 location.href = ("/");
             } else {
                 throw new Error();

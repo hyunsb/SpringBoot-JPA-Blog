@@ -29,6 +29,16 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
+    public void update(User requestUser) {
+        User persistenceUser = userRepository.findById(requestUser.getId()).orElseThrow(()->{
+            throw new IllegalArgumentException("회원수정 실패: 회원 정보가 존재하지 않습니다.");
+        });
+
+        persistenceUser.setPassword(encoder.encode(requestUser.getPassword()));
+        persistenceUser.setEmail(requestUser.getEmail());
+    }
+
 //    ============================ Spring Security 사용 이전의 로그인 로직 ===============================//
 
 //    @Transactional(readOnly = true) // select 시 트랜잭션 시작, 서비스 종료 시 트랜잭션 종료 (정합성)

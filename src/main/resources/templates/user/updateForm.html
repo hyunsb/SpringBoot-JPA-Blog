@@ -29,9 +29,14 @@
         </div>
     </form>
 
-    <button id="btn-update" class="btn btn-primary">회원가입</button>
+    <button id="btn-update" class="btn btn-primary">회원정보 수정</button>
 
 </div>
+
+<script type="text/javascript" th:inline="javascript">
+    const updateUserId = $.parseJSON('[[ ${#authentication.principal.user.id} ]]');
+</script>
+
 <script src="/js/user.js"></script>
 
 

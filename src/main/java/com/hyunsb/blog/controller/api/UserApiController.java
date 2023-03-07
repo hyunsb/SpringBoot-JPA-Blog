@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +27,13 @@ public class UserApiController {
         userService.join(user);
         // 오류 시 ExceptionHandler 에서 처리
 
+        return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
+    }
+
+    @PutMapping("/user")
+    public ResponseDTO<Integer> update(@RequestBody User user){ // @RequestBody 사용 시 json 타입을 받을 수 있음
+                                                                // 사용하지 않을 시 (key=value 형태의 데이터 : x-www-form-urlencoded)
+        userService.update(user);
         return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
     }
 
