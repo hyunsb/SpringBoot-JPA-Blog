@@ -1,9 +1,12 @@
 package com.hyunsb.blog.controller;
 
+import com.hyunsb.blog.config.auth.PrincipalDetail;
 import com.hyunsb.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,9 +33,8 @@ public class UserController {
     }
 
     @GetMapping("/user/updateForm")
-    public String updateForm(Authentication authentication, Model model){
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        model.addAttribute("userInfo", userService.findByName(userDetails.getUsername()));
+    public String updateForm(@AuthenticationPrincipal PrincipalDetail principalDetail){
+
         return "user/updateForm";
     }
 }

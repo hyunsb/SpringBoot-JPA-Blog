@@ -20,12 +20,6 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-    public User findByName(String name){
-        return userRepository.findByUsername(name).orElseThrow(()->{
-            throw new IllegalArgumentException("회원 정보가 존재하지 않습니다.");
-        });
-    }
-
     @Transactional
     public void join(User user) {
         String encPassword = encoder.encode(user.getPassword());
