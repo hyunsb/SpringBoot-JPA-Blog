@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-
 @Service
 public class UserService {
 
@@ -41,6 +40,20 @@ public class UserService {
 
         persistenceUser.setPassword(encoder.encode(requestUser.getPassword()));
         persistenceUser.setEmail(requestUser.getEmail());
+    }
+
+    @Transactional(readOnly = true)
+    public User findUser(String username) {
+        return userRepository.findByUsername(username).orElseThrow(()->{
+            throw new IllegalArgumentException("회원 정보가 존재하지 않습니다.");
+        });
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isExistUser(String username){
+        return userRepository.findByUsername(username)
+                .orElseGet(User::new)
+                .getUsername() != null;
     }
 
 //    ============================ Spring Security 사용 이전의 로그인 로직 ===============================//
