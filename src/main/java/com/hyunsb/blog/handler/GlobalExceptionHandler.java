@@ -17,8 +17,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = UsernameNotFoundException.class)
-    public String UsernameNotFoundExceptionHandler(UsernameNotFoundException e){
-        return e.getMessage();
+    public ResponseDTO<String> UsernameNotFoundExceptionHandler(UsernameNotFoundException e){
+        return new ResponseDTO<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
     }
 
 }
