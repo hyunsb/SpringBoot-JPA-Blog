@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hyunsb.blog.config.auth.PrincipalDetail;
 import com.hyunsb.blog.kakao.TokenParameter;
+import com.hyunsb.blog.model.KakaoProfile;
 import com.hyunsb.blog.model.OAuthToken;
 import com.hyunsb.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.UUID;
 
 // 인증이 되지 않은 사용자들이 출입할 수 있는 경로 /auth/**
 // uri = / 인 경우 index.html 허용
@@ -82,6 +85,40 @@ public class UserController {
         OAuthToken oAuthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
 
 
-        return response.getBody();
+        //==========================카카오 사용자 정보 요청============================//
+        RestTemplate restTemplate2 = new RestTemplate();
+
+        // HttpHeader 오브젝트 생성
+        HttpHeaders headers2 = new HttpHeaders();
+        headers2.add("Authorization", "Bearer " + oAuthToken.access_token);
+        headers2.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // HttpHeader 와 HttpBody 를 하나의 오브젝트에 담기
+        HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 =
+                new HttpEntity<>(headers2);
+
+        // POST 방식으로 HTTP 요청, response 변수에 응답을 받음
+        ResponseEntity<String> response2 = restTemplate2.exchange(
+                "https://kapi.kakao.com/v2/user/me",
+                HttpMethod.POST,
+                kakaoProfileRequest2,
+                String.class
+        );
+
+        // Gson, Json Simple, ObjectMapper
+        ObjectMapper objectMapper2 = new ObjectMapper();
+        KakaoProfile kakaoProfile = objectMapper.readValue(response2.getBody(), KakaoProfile.class);
+
+
+        // User 오브젝트: username, password, email
+        System.out.println("카카오 아이디(번호)" + kakaoProfile.getId());
+        System.out.println("카카오 이메일" + kakaoProfile.getKakao_account().getEmail());
+
+        System.out.println("블로그서버 유저네임: " + kakaoProfile.getKakao_account().getEmail() + "_" + kakaoProfile.getId());
+        System.out.println("블로그서버 이메일: " + kakaoProfile.getKakao_account().getEmail());
+        UUID garbagePassword = UUID.randomUUID();
+        System.out.println("블로그서버 패스워드: " + garbagePassword);
+
+        return response2.getBody();
     }
 }
