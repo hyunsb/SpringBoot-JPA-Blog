@@ -34,12 +34,15 @@ public class UserService {
 
     @Transactional
     public void update(User requestUser) {
-        User persistenceUser = userRepository.findById(requestUser.getId()).orElseThrow(()->{
+        User persistenceUser = userRepository.findById(requestUser.getId()).orElseThrow(() -> {
             throw new IllegalArgumentException("회원수정 실패: 회원 정보가 존재하지 않습니다.");
         });
 
-        persistenceUser.setPassword(encoder.encode(requestUser.getPassword()));
-        persistenceUser.setEmail(requestUser.getEmail());
+        //validate 체크 리팩터링 필요
+        if (persistenceUser.getOauth() == null || persistenceUser.getOauth().equals("")) {
+            persistenceUser.setPassword(encoder.encode(requestUser.getPassword()));
+            persistenceUser.setEmail(requestUser.getEmail());
+        }
     }
 
     @Transactional(readOnly = true)

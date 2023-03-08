@@ -38,6 +38,8 @@ public class User {
     private RoleType role;
 //    private String role; // Enum을 쓰는 것이 좋다. (admin, user, manager 등의 권한을 지정)
 
+    private String oauth; // kakao, google
+
     @CreationTimestamp // 시간 자동으로 입력
     private Timestamp createDate; // 가입날짜
 

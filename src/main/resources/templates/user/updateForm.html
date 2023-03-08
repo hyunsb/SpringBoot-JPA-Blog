@@ -18,15 +18,22 @@
             <input type="text" class="form-control" id="username" th:value="${#authentication.principal.user.username}" name="username" readonly>
         </div>
 
-        <div class="mb-3">
+        <div th:if="${#authentication.principal.user.oauth == null}" class="mb-3">
             <label for="password" class="form-label">Password:</label>
             <input type="text" class="form-control" id="password" placeholder="Enter password" name="password">
         </div>
 
-        <div class="mb-3 mt-3">
+        <div th:if="${#authentication.principal.user.oauth == null}" class="mb-3 mt-3">
             <label for="email" class="form-label">Email:</label>
             <input type="email" class="form-control" id="email" th:value="${#authentication.principal.user.email}" placeholder="Enter email" name="email">
         </div>
+
+        <div th:unless="${#authentication.principal.user.oauth == null}" class="mb-3 mt-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" th:value="${#authentication.principal.user.email}" placeholder="Enter email" name="email" readonly>
+        </div>
+
+
     </form>
 
     <button id="btn-update" class="btn btn-primary">회원정보 수정</button>

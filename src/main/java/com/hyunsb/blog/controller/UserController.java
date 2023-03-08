@@ -127,7 +127,9 @@ public class UserController {
             User kakaoUser = User.builder()
                     .username(kakaoUsername)
                     .password(cosKey)
-                    .email(kakaoProfile.getKakao_account().getEmail()).build();
+                    .email(kakaoProfile.getKakao_account().getEmail())
+                    .oauth("kakao")
+                    .build();
 
             userService.join(kakaoUser);
         }
