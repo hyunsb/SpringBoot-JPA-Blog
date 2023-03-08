@@ -64,13 +64,11 @@ let index = {
 
         }).done(function (response) {
             // 요청 결과가 정상인 경우
-            const status = response.status;
-
-            if (status === 200){
+            if (response.status === 200){
                 alert("회원가입이 완료 되었습니다.");
                 location.href = ("/");
             } else {
-                throw new Error();
+                alert(response.data)
             }
 
         }).fail(function (error) {

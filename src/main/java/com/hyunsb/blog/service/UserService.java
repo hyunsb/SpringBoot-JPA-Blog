@@ -25,11 +25,18 @@ public class UserService {
 
     @Transactional
     public void join(User user) {
+        validateDuplicateUsername(user.getUsername());
         String encPassword = encoder.encode(user.getPassword());
         user.setPassword(encPassword);
         user.setRole(RoleType.USER);
 
         userRepository.save(user);
+    }
+
+    private void validateDuplicateUsername(String username){
+        userRepository.findByUsername(username).ifPresent(e ->{
+            throw new IllegalArgumentException("존재하는 회원 아이디 입니다.");
+        });
     }
 
     @Transactional
