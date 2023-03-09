@@ -1,5 +1,7 @@
 package com.hyunsb.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +38,7 @@ public class Board {
     private User user; // DB는 오브젝트를 저장할 수 없다. FK를 사용한다. ORM이 자동으로 FK 생성
 
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // mappedBy: 연관관계의 주인이 아니다. (FK가 아니다) DB에 칼럼 생성 X
+    @JsonIgnoreProperties("{board}") // 무한참조 방지
     private List<Reply> replies;
 
     @CreationTimestamp
