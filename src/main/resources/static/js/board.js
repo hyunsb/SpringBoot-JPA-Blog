@@ -34,7 +34,7 @@ let index = {
                 alert("글쓰기가 완료 되었습니다.");
                 location.href = ("/");
             } else {
-                throw new Error();
+                alert(response.data);
             }
 
         }).fail(function (error) {
@@ -60,7 +60,7 @@ let index = {
                 history.back();
                 // location.href = ("/");
             } else {
-                throw new Error();
+                alert(response.data);
             }
 
         }).fail(function (error) {
@@ -94,7 +94,7 @@ let index = {
                 history.back();
                 // location.href = ("/");
             } else {
-                throw new Error();
+                alert(response.data);
             }
 
         }).fail(function (error) {

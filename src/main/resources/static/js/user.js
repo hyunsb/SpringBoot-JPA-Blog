@@ -68,7 +68,7 @@ let index = {
                 alert("회원가입이 완료 되었습니다.");
                 location.href = ("/");
             } else {
-                alert(response.data)
+                alert(response.data);
             }
 
         }).fail(function (error) {
@@ -101,7 +101,7 @@ let index = {
                 alert("회원정보 수정이 완료 되었습니다.");
                 location.href = ("/");
             } else {
-                throw new Error();
+                alert(response.data);
             }
 
         }).fail(function (error) {
