@@ -7,6 +7,7 @@ import com.hyunsb.blog.kakao.TokenParameter;
 import com.hyunsb.blog.model.KakaoProfile;
 import com.hyunsb.blog.model.OAuthToken;
 import com.hyunsb.blog.model.User;
+import com.hyunsb.blog.service.OAuthService;
 import com.hyunsb.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private OAuthService oAuthService;
+
     @GetMapping("/auth/joinForm")
     public String joinForm(){
         return "user/joinForm";
@@ -56,7 +60,7 @@ public class UserController {
 
     @GetMapping("/auth/kakao/callback")
     public String kakaoCallback(String code) throws JsonProcessingException {
-        userService.oAuthLogin(code);
+        oAuthService.oAuthLogin(code);
         return "redirect:/";
     }
 }
