@@ -51,7 +51,7 @@
         <div class="card-header bg-secondary">댓글 리스트</div>
         <div th:if="${board.replies.size()} == 0" style="text-align: center; padding-top: 1rem; color: gray"><p>등록된 댓글이 존재하지 않습니다.</p></div>
 
-        <ul th:if="${board.replies.size()} == 0" id="reply--box" class="list-group">
+        <ul th:unless=" ${board.replies.size()} == 0" id="reply--box" class="list-group">
 
             <li th:each="reply : ${board.replies}" id="reply--1" class="list-group-item d-flex justify-content-between" >
                 <div th:text="${reply.content}">댓글 내용입니다.</div>
