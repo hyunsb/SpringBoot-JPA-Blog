@@ -3,7 +3,6 @@ package com.hyunsb.blog.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hyunsb.blog.config.auth.PrincipalDetail;
-import com.hyunsb.blog.kakao.TokenParameter;
 import com.hyunsb.blog.model.KakaoProfile;
 import com.hyunsb.blog.model.OAuthToken;
 import com.hyunsb.blog.model.User;
@@ -60,7 +59,7 @@ public class UserController {
 
     @GetMapping("/auth/kakao/callback")
     public String kakaoCallback(String code) throws JsonProcessingException {
-        oAuthService.oAuthLogin(code);
+        oAuthService.kakaoUserInfoRequest(code);
         return "redirect:/";
     }
 }

@@ -3,7 +3,7 @@ package com.hyunsb.blog.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hyunsb.blog.kakao.KakaoTokenParams;
-import com.hyunsb.blog.kakao.TokenParameter;
+import com.hyunsb.blog.kakao.KakaoUserInfoHeaders;
 import com.hyunsb.blog.model.KakaoProfile;
 import com.hyunsb.blog.model.OAuthToken;
 import com.hyunsb.blog.model.User;
@@ -17,10 +17,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class OAuthService {
 
     @Value("${cos.key}")
@@ -32,19 +34,14 @@ public class OAuthService {
     @Autowired
     private UserService userService;
 
-    public void kakaoTokenRequest(String code) throws JsonProcessingException {
+    public OAuthToken kakaoTokenRequest(String code) throws JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        for(KakaoTokenParams tokenParam : KakaoTokenParams.values())
-            params.add(tokenParam.getParamName(), tokenParam.getParamValue());
-        params.add("code", code);
-
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =
-                new HttpEntity<>(params, headers);
+                new HttpEntity<>(kakaoTokenParamsInit(code), headers);
 
         // POST 방식으로 HTTP 요청, response 변수에 응답을 받음
         ResponseEntity<String> response = restTemplate.exchange(
@@ -56,8 +53,60 @@ public class OAuthService {
 
         // Gson, Json Simple, ObjectMapper
         ObjectMapper objectMapper = new ObjectMapper();
-        OAuthToken oAuthToken = objectMapper.readValue(response.getBody(), OAuthToken.class);
+        return objectMapper.readValue(response.getBody(), OAuthToken.class);
     }
+
+    private MultiValueMap<String, String> kakaoTokenParamsInit(String code){
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        for(KakaoTokenParams tokenParam : KakaoTokenParams.values())
+            params.add(tokenParam.getParamName(), tokenParam.getParamValue());
+        params.add("code", code);
+        return params;
+    }
+
+
+    public void kakaoUserInfoRequest(String code) throws JsonProcessingException {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + kakaoTokenRequest(code).access_token);
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        // HttpHeader 와 HttpBody 를 하나의 오브젝트에 담기
+        HttpEntity<MultiValueMap<String, String>> kakaoProfileRequest2 =
+                new HttpEntity<>(headers);
+
+        // POST 방식으로 HTTP 요청, response 변수에 응답을 받음
+        ResponseEntity<String> response2 = restTemplate.exchange(
+                "https://kapi.kakao.com/v2/user/me",
+                HttpMethod.POST,
+                kakaoProfileRequest2,
+                String.class
+        );
+
+        // Gson, Json Simple, ObjectMapper
+        ObjectMapper objectMapper = new ObjectMapper();
+        KakaoProfile kakaoProfile = objectMapper.readValue(response2.getBody(), KakaoProfile.class);
+
+        String kakaoUsername = kakaoProfile.getKakao_account().getEmail() + "_" + kakaoProfile.getId();
+
+        if(!userService.isExistUser(kakaoUsername)) {
+            User kakaoUser = User.builder()
+                    .username(kakaoUsername)
+                    .password(cosKey)
+                    .email(kakaoProfile.getKakao_account().getEmail())
+                    .oauth("kakao")
+                    .build();
+
+            userService.join(kakaoUser);
+        }
+
+        System.out.println("=======================로그인 진행========================");
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(kakaoUsername, cosKey));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
 
 
     public void oAuthLogin(String code) throws JsonProcessingException {
@@ -73,11 +122,7 @@ public class OAuthService {
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
         // HttpBody 오브젝트 생성
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("grant_type", TokenParameter.RequestParams.getGrantType());
-        params.add("client_id", TokenParameter.RequestParams.getClientId());
-        params.add("redirect_uri", TokenParameter.RequestParams.getRedirectUri());
-        params.add("code", code);
+        MultiValueMap<String, String> params = kakaoTokenParamsInit(code);
 
         // HttpHeader 와 HttpBody 를 하나의 오브젝트에 담기
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =

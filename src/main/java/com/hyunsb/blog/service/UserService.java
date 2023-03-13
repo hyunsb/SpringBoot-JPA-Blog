@@ -2,7 +2,6 @@ package com.hyunsb.blog.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hyunsb.blog.kakao.TokenParameter;
 import com.hyunsb.blog.model.KakaoProfile;
 import com.hyunsb.blog.model.OAuthToken;
 import com.hyunsb.blog.model.RoleType;
