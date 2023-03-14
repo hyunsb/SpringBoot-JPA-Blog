@@ -11,6 +11,10 @@ let index = {
         $("#btn-update").on("click", ()=>{
             this.update();
         });
+
+        $("#btn-reply").on("click", ()=>{
+            this.reply();
+        });
     },
 
     save: function () {
@@ -80,6 +84,39 @@ let index = {
 
         $.ajax({
             type: "PUT",
+            url: "/api/board/" + id,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+
+        }).done(function (response) {
+            // 요청 결과가 정상인 경우
+            const status = response.status;
+
+            if (status === 200){
+                alert("글 수정이 완료 되었습니다.");
+                history.back();
+                // location.href = ("/");
+            } else {
+                alert(response.data);
+            }
+
+        }).fail(function (error) {
+            // 요청 결과가 비정상인 경우
+            alert(JSON.stringify(error));
+
+        });
+    },
+
+    reply: function () {
+        let id = updateId;
+
+        let data = {
+            content: $("#replyContent").val()
+        }
+
+        $.ajax({
+            type: "GET",
             url: "/api/board/" + id,
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
