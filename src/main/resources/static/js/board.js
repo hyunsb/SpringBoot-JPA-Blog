@@ -12,8 +12,8 @@ let index = {
             this.update();
         });
 
-        $("#btn-reply").on("click", ()=>{
-            this.reply();
+        $("#btn-reply-save").on("click", ()=>{
+            this.replySave();
         });
     },
 
@@ -49,6 +49,8 @@ let index = {
     },
 
     deleteById: function () {
+
+        let id = boardId;
 
         $.ajax({
             type: "DELETE",
@@ -108,16 +110,15 @@ let index = {
         });
     },
 
-    reply: function () {
-        let id = updateId;
-
+    replySave: function () {
         let data = {
-            content: $("#replyContent").val()
+            boardId: boardId,
+            content: $("#reply-content").val()
         }
 
         $.ajax({
-            type: "GET",
-            url: "/api/board/" + id,
+            type: "POST",
+            url: `api/board/${data.boardId}/reply`,
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -127,9 +128,9 @@ let index = {
             const status = response.status;
 
             if (status === 200){
-                alert("글 수정이 완료 되었습니다.");
-                history.back();
-                // location.href = ("/");
+                alert("댓글 작성이 완료 되었습니다.");
+                location.href = `board/${boardId}`;
+                // history.back();
             } else {
                 alert(response.data);
             }
