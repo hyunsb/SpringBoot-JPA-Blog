@@ -1,8 +1,10 @@
 package com.hyunsb.blog.service;
 
 import com.hyunsb.blog.model.Board;
+import com.hyunsb.blog.model.Reply;
 import com.hyunsb.blog.model.User;
 import com.hyunsb.blog.respository.BoardRepository;
+import com.hyunsb.blog.respository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,9 @@ public class BoardService {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private ReplyRepository replyRepository;
 
     @Transactional
     public void save(Board board, User user){ // title, content
@@ -57,5 +62,16 @@ public class BoardService {
         persistenceBoard.setTitle(requestBoard.getTitle());
         persistenceBoard.setContent(requestBoard.getContent());
         // 해당 함수 종료 시(Service 가 종료될 때) 트랜잭션이 종료되면서 더티체킹 진행 -> 자동 업데이트(DB flush)
+    }
+
+    @Transactional
+    public void saveReply(User user, int boardId, Reply requestReply) {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> {
+            throw new IllegalArgumentException("댓글 등록 실패: 게시글 id를 찾을 수 없습니다.");
+        });
+        requestReply.setUser(user);
+        requestReply.setBoard(board);
+
+        replyRepository.save(requestReply);
     }
 }

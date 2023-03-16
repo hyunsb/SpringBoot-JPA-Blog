@@ -50,11 +50,9 @@ let index = {
 
     deleteById: function () {
 
-        let id = boardId;
-
         $.ajax({
             type: "DELETE",
-            url: "/api/board/" + id,
+            url: "/api/board/" + boardId,
             dataType: "json",
 
         }).done(function (response) {
@@ -111,35 +109,40 @@ let index = {
     },
 
     replySave: function () {
+
+        let id = boardId;
+
         let data = {
-            boardId: boardId,
             content: $("#reply-content").val()
         }
 
-        $.ajax({
-            type: "POST",
-            url: `api/board/${data.boardId}/reply`,
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
+        console.log(data, boardId);
 
-        }).done(function (response) {
-            // 요청 결과가 정상인 경우
-            const status = response.status;
-
-            if (status === 200){
-                alert("댓글 작성이 완료 되었습니다.");
-                location.href = `board/${boardId}`;
-                // history.back();
-            } else {
-                alert(response.data);
-            }
-
-        }).fail(function (error) {
-            // 요청 결과가 비정상인 경우
-            alert(JSON.stringify(error));
-
-        });
+        // $.ajax({
+        //     type: "POST",
+        //     // url: `api/board/${boardId}/reply`,
+        //     url: "api/board/" + boardId + "/reply",
+        //     data: JSON.stringify(data),
+        //     contentType: "application/json; charset=utf-8",
+        //     dataType: "json",
+        //
+        // }).done(function (response) {
+        //     // 요청 결과가 정상인 경우
+        //     const status = response.status;
+        //
+        //     if (status === 200){
+        //         alert("댓글 작성이 완료 되었습니다.");
+        //         location.href = `board/${boardId}`;
+        //         // history.back();
+        //     } else {
+        //         alert(response.data);
+        //     }
+        //
+        // }).fail(function (error) {
+        //     // 요청 결과가 비정상인 경우
+        //     alert(JSON.stringify(error));
+        //
+        // });
     },
 }
 
