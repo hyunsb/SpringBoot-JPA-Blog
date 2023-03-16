@@ -108,41 +108,64 @@ let index = {
         });
     },
 
+    // replySave: function () {
+    //     let data = {
+    //         content: $("#reply-content").val()
+    //     }
+    //
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "/api/board/reply/" + boardId,
+    //         data: JSON.stringify(data),
+    //         contentType: "application/json; charset=utf-8",
+    //         dataType: "json",
+    //
+    //     }).done(function (response) {
+    //         // 요청 결과가 정상인 경우
+    //         const status = response.status;
+    //
+    //         if (status === 200){
+    //             alert("댓글 등록이 완료 되었습니다.");
+    //             location.href = ("/board/" + boardId);
+    //         } else {
+    //             alert(response.data);
+    //         }
+    //
+    //     }).fail(function (error) {
+    //         // 요청 결과가 비정상인 경우
+    //         alert(JSON.stringify(error));
+    //
+    //     });
+    // },
+
     replySave: function () {
-
-        let id = boardId;
-
         let data = {
             content: $("#reply-content").val()
         }
 
-        console.log(data, boardId);
+        $.ajax({
+            type: "POST",
+            url: `/api/board/${boardId}/reply`,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
 
-        // $.ajax({
-        //     type: "POST",
-        //     // url: `api/board/${boardId}/reply`,
-        //     url: "api/board/" + boardId + "/reply",
-        //     data: JSON.stringify(data),
-        //     contentType: "application/json; charset=utf-8",
-        //     dataType: "json",
-        //
-        // }).done(function (response) {
-        //     // 요청 결과가 정상인 경우
-        //     const status = response.status;
-        //
-        //     if (status === 200){
-        //         alert("댓글 작성이 완료 되었습니다.");
-        //         location.href = `board/${boardId}`;
-        //         // history.back();
-        //     } else {
-        //         alert(response.data);
-        //     }
-        //
-        // }).fail(function (error) {
-        //     // 요청 결과가 비정상인 경우
-        //     alert(JSON.stringify(error));
-        //
-        // });
+        }).done(function (response) {
+            // 요청 결과가 정상인 경우
+            const status = response.status;
+
+            if (status === 200){
+                alert("댓글 등록이 완료 되었습니다.");
+                location.href = ("/board/" + boardId);
+            } else {
+                alert(response.data);
+            }
+
+        }).fail(function (error) {
+            // 요청 결과가 비정상인 경우
+            alert(JSON.stringify(error));
+
+        });
     },
 }
 

@@ -35,19 +35,19 @@ public class BoardApiController {
                                        @RequestBody Board board){
 
         boardService.updateBoard(id, board);
-        return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
+        return new ResponseDTO<>(HttpStatus.OK.value(), 1);
     }
 
-    @PostMapping("api/board/{boardId}/reply")
-    public ResponseDTO<Integer> replySave(@PathVariable int boardId,
+    @PostMapping("/api/board/{id}/reply")
+    public ResponseDTO<Integer> replySave(@PathVariable int id,
                                           @RequestBody Reply reply,
                                           @AuthenticationPrincipal PrincipalDetail principalDetail){
 
         System.out.println("===============================================");
-        System.out.println("boardId :" + boardId);
+        System.out.println("boardId :" + id);
 
-        boardService.saveReply(principalDetail.getUser(), boardId, reply);
-        return new ResponseDTO<Integer>(HttpStatus.OK.value(), 1);
+        boardService.saveReply(principalDetail.getUser(), id, reply);
+        return new ResponseDTO<>(HttpStatus.OK.value(), 1);
     }
 
 }
