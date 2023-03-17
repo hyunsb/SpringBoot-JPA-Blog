@@ -11,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 public class BoardService {
 
@@ -65,7 +63,7 @@ public class BoardService {
     }
 
     @Transactional
-    public void saveReply(User user, int boardId, Reply requestReply) {
+    public void replySave(User user, int boardId, Reply requestReply) {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> {
             throw new IllegalArgumentException("댓글 등록 실패: 게시글 id를 찾을 수 없습니다.");
         });
@@ -73,5 +71,9 @@ public class BoardService {
         requestReply.setBoard(board);
 
         replyRepository.save(requestReply);
+    }
+
+    public void replyDelete(int replyId) {
+        replyRepository.deleteById(replyId);
     }
 }

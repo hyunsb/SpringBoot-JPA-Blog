@@ -43,10 +43,16 @@ public class BoardApiController {
                                           @RequestBody Reply reply,
                                           @AuthenticationPrincipal PrincipalDetail principalDetail){
 
-        System.out.println("===============================================");
-        System.out.println("boardId :" + id);
+        boardService.replySave(principalDetail.getUser(), id, reply);
+        return new ResponseDTO<>(HttpStatus.OK.value(), 1);
+    }
 
-        boardService.saveReply(principalDetail.getUser(), id, reply);
+//    /api/board/${boardId}/${replyId}
+    @DeleteMapping("/api/board/{boardId}/{replyId}")
+    public ResponseDTO<Integer> replyDelete(@PathVariable int boardId,
+                                            @PathVariable int replyId){
+
+        boardService.replyDelete(replyId);
         return new ResponseDTO<>(HttpStatus.OK.value(), 1);
     }
 
