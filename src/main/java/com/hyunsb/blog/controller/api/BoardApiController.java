@@ -48,7 +48,7 @@ public class BoardApiController {
     }
 
 //    /api/board/${boardId}/${replyId}
-    @DeleteMapping("/api/board/{boardId}/{replyId}")
+    @DeleteMapping("/api/board/{boardId}/reply/{replyId}")
     public ResponseDTO<Integer> replyDelete(@PathVariable int boardId,
                                             @PathVariable int replyId){
 

@@ -57,7 +57,7 @@ public class UserService {
             throw new IllegalArgumentException("회원수정 실패: 회원 정보가 존재하지 않습니다.");
         });
 
-        //validate 체크 리팩터링 필요
+        //validate 체크
         if (persistenceUser.getOauth() == null || persistenceUser.getOauth().equals("")) {
             persistenceUser.setPassword(encoder.encode(requestUser.getPassword()));
             persistenceUser.setEmail(requestUser.getEmail());

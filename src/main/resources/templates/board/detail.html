@@ -52,7 +52,6 @@
         <div th:if="${board.replies.size()} == 0" style="text-align: center; padding-top: 1rem; color: gray"><p>등록된 댓글이 존재하지 않습니다.</p></div>
 
         <ul th:unless=" ${board.replies.size()} == 0" id="reply--box" class="list-group">
-
             <div th:each="reply : ${board.replies}">
                 <li class="list-group-item d-flex justify-content-between" >
                     <div th:text="${reply.content}">댓글 내용</div>
@@ -63,9 +62,7 @@
                     </div>
                 </li>
             </div>
-
         </ul>
-
     </div>
 
 </div>
@@ -77,7 +74,7 @@
     function replyDelete(replyId){
         $.ajax({
             type: "DELETE",
-            url: `/api/board/${boardId}/${replyId}`,
+            url: `/api/board/${boardId}/reply/${replyId}`,
             dataType: "json",
 
         }).done(function (response) {
