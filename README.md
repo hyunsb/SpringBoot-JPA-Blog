@@ -1,12 +1,12 @@
-프로젝트 명: 스프링부트로 블로그 구축하기
-
-프로젝트 기간: 2023.03 (1개월)
-
-사용 기술: SpringBoot, ThymeLeaf, SpringSecurity, oAuth2.0, Data JPA
-
-
 # SpringBoot-JPA-Blog
-https://hyunsb.notion.site/Blog-a9a9856a2873416eb8a80542935dffa0
+
+- 프로젝트 명: 스프링부트로 블로그 구축하기
+
+- 프로젝트 기간: 2023.03 (1개월)
+
+- 사용 기술: SpringBoot, ThymeLeaf, SpringSecurity, oAuth2.0, Data JPA
+
+- 개발 과정 및 학습 내용 정리: https://hyunsb.notion.site/Blog-a9a9856a2873416eb8a80542935dffa0
 
 ## 소개
 
